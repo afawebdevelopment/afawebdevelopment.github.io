@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>AFA Web Development</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="AFA Web Development — estudio independiente de apps y juegos móviles." />
+  <meta name="author" content="AFA Web Development" />
+
+  <style>
+    :root{
+      --bg1:#0b1020;
+      --bg2:#000014;
+      --accent:#7df9ff;
+      --accent2:#9aa4ff;
+      --text:#ffffff;
+      --muted:#cfd6ff;
+      --muted2:#9aa0c4;
+      --card: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.10);
+      --glow: 0 0 28px rgba(125,249,255,0.28);
+      --shadow: 0 14px 30px rgba(0,0,0,0.35);
+      --ok: #1db954;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(154,164,255,0.25), transparent 60%),
+        radial-gradient(900px 500px at 80% 10%, rgba(125,249,255,0.18), transparent 55%),
+        radial-gradient(circle at top, var(--bg1), var(--bg2));
+      text-align:center;
+    }
+
+    /* Estrellas sutiles (sin imágenes) */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.65), transparent 60%),
+        radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.45), transparent 60%),
+        radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1px 1px at 18% 55%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1px 1px at 62% 15%, rgba(255,255,255,0.35), transparent 60%),
+        radial-gradient(1px 1px at 82% 42%, rgba(255,255,255,0.30), transparent 60%);
+      opacity:0.55;
+      filter: blur(0.2px);
+    }
+
+    header{
+      padding: 84px 18px 34px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 18px;
+    }
+
+    /* “Logo” monograma AFA */
+    .logo{
+      width: 86px;
+      height: 86px;
+      border-radius: 22px;
+      display:grid;
+      place-items:center;
+      background: linear-gradient(135deg, rgba(125,249,255,0.18), rgba(154,164,255,0.12));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--glow);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(circle, rgba(125,249,255,0.35), transparent 55%);
+      transform: rotate(25deg);
+      opacity:0.6;
+    }
+    .logo span{
+      position:relative;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-shadow: 0 0 12px rgba(125,249,255,0.45);
+      font-size: 22px;
+    }
+
+    h1{
+      margin:0;
+      font-size: 2.6rem;
+      letter-spacing: 2px;
+    }
+
+    .tagline{
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.05rem;
+    }
+
+    .cta{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      text-decoration:none;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,0.07);
+    }
+    .btn:active{
+      transform: translateY(0px);
+    }
+    .btn.primary{
+      border-color: rgba(125,249,255,0.35);
+    }
+    .btn.primary:hover{
+      box-shadow: var(--glow);
+    }
+
+    /* Para que el botón <button> se vea igual que <a> */
+    button.btn{
+      cursor:pointer;
+      font: inherit;
+    }
+
+    main{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 18px 56px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .card{
+      grid-column: span 12;
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      padding: 20px;
+      text-align:left;
+      backdrop-filter: blur(6px);
+    }
+
+    .card h2{
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+      color: var(--accent2);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .card p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .meta{
+      margin-top: 10px;
+      color: var(--muted2);
+      font-size: 0.95rem;
+    }
+
+    .icon{
+      width: 18px;
+      height: 18px;
+      display:inline-block;
+      color: var(--accent);
+      filter: drop-shadow(0 0 8px rgba(125,249,255,0.25));
+    }
+
+    a.link{
+      color: var(--accent);
+      text-decoration:none;
+    }
+    a.link:hover{
+      text-decoration:underline;
+    }
+
+    footer{
+      padding: 26px 18px 34px;
+      color: var(--muted2);
+      font-size: 0.92rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    footer a{
+      color: var(--muted2);
+      text-decoration:none;
+    }
+    footer a:hover{ text-decoration:underline; }
+
+    /* Mini toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(10, 16, 36, 0.85);
+      border: 1px solid rgba(125,249,255,0.25);
+      box-shadow: var(--shadow);
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: var(--text);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      backdrop-filter: blur(8px);
+      font-size: 0.95rem;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast b{ color: var(--accent); }
+
+    @media (min-width: 760px){
+      h1{ font-size: 3.1rem; }
+      .card{ padding: 24px; }
+      .card.one{ grid-column: span 6; }
+      .card.two{ grid-column: span 6; }
+      .card.three{ grid-column: span 12; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo" aria-label="AFA Web Development">
+      <span>AFA</span>
+    </div>
+
+    <h1>AFA WEB DEVELOPMENT</h1>
+
+    <p class="tagline">
+      Estudio independiente enfocado en el desarrollo de <strong>apps</strong> y <strong>juegos móviles</strong>.
+      Buscamos experiencias ligeras, estables y con una estética cuidada.
+    </p>
+
+    <div class="cta">
+      <!-- CONTACTO: mailto + fallback copiar -->
+      <a class="btn primary"
+         href="mailto:afawebdevelopment@gmail.com?subject=Contacto%20desde%20AFA%20Web%20Development&body=Hola%20AFA%20Web%20Development,%0D%0A%0D%0A"
+         title="Enviar correo"
+         aria-label="Enviar correo a afawebdevelopment@gmail.com">
+        ✉️ <span>Contacto</span>
+      </a>
+
+      <button class="btn" type="button" id="copyEmail" title="Copiar correo" aria-label="Copiar correo al portapapeles">
+        📋 <span>Copiar email</span>
+      </button>
+
+      <!-- Opcional: link a Google Play / GitHub -->
+      <a class="btn"
+         href="https://play.google.com/store/apps/details?id=com.lockin.astroshift"
+         target="_blank" rel="noopener"
+         title="Google Play (opcional)">
+        ▶️ <span>Google Play</span>
+      </a>
+
+      <a class="btn"
+         href="https://github.com/afawebdevelopment"
+         target="_blank" rel="noopener"
+         title="GitHub">
+        💻 <span>GitHub</span>
+      </a>
+
+      <!-- Email visible (por si todo falla) -->
+      <button class="btn" type="button" id="revealEmail" title="Mostrar correo" aria-label="Mostrar correo">
+        👁️ <span>Ver email</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+
+    <section class="card one">
+      <h2>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        Qué hacemos
+      </h2>
+      <p>
+        Diseñamos y desarrollamos productos Android con enfoque en rendimiento,
+        simplicidad y una presentación moderna.
+      </p>
+      <div class="meta">Apps · Juegos · Prototipos</div>
+    </section>
+
+    <section class="card two">
+      <h2>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        Publicaciones
+      </h2>
+      <p>
+        Contamos con proyectos publicados en Google Play y seguimos construyendo
+        nuevas experiencias.
+      </p>
+      <div class="meta">Actualizaciones próximamente</div>
+    </section>
+
+    <section class="card three">
+      <h2>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 8l-9 6-9-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3 8v10h18V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Contacto &amp; Legal
+      </h2>
+      <p>
+        Para soporte o consultas:
+        <strong id="emailInline">afawebdevelopment@gmail.com</strong><br/>
+        Puedes ver nuestra <a class="link" href="privacy.html">Política de privacidad</a>.
+      </p>
+      <div class="meta">Sitio oficial del desarrollador</div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  © 2026 AFA Web Development · <a href="privacy.html">Política de privacidad</a>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  (function () {
+    const EMAIL = "afawebdevelopment@gmail.com";
+
+    const copyBtn = document.getElementById("copyEmail");
+    const revealBtn = document.getElementById("revealEmail");
+    const emailInline = document.getElementById("emailInline");
+    const toast = document.getElementById("toast");
+
+    function showToast(message){
+      if (!toast) return;
+      toast.innerHTML = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1400);
+    }
+
+    async function copyEmail(){
+      try {
+        await navigator.clipboard.writeText(EMAIL);
+        showToast('✅ Email <b>copiado</b>: ' + EMAIL);
+      } catch (e) {
+        // Fallback clásico (por si clipboard no está permitido)
+        const tmp = document.createElement("input");
+        tmp.value = EMAIL;
+        document.body.appendChild(tmp);
+        tmp.select();
+        tmp.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        document.body.removeChild(tmp);
+        showToast('✅ Email <b>copiado</b>: ' + EMAIL);
+      }
+    }
+
+    function revealEmail(){
+      if (emailInline) {
+        emailInline.textContent = EMAIL;
+      }
+      showToast('📩 Email: <b>' + EMAIL + '</b>');
+    }
+
+    if (copyBtn) copyBtn.addEventListener("click", copyEmail);
+    if (revealBtn) revealBtn.addEventListener("click", revealEmail);
+  })();
+</script>
+
+</body>
+</html>
